@@ -7,6 +7,8 @@ Use the following npm script to compile and run:
 npm run start
 ```
 
+**Important Note:** I used older versions of packages like `typescript` and `jest` in this example, because the boilerplate specified Node 12, and I wanted to make sure it ran correctly. Were this a real application in production, I'd strongly recommend using more up-to-date versions due to security risks.
+
 ## Requirements
 
 ### Part 1
