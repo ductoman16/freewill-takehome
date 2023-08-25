@@ -48,12 +48,12 @@ export class CharityPicker {
       console.log()
 
       var stateHighlightedCharities = userStateCharities.getByCategory(personalizationOptions.categoryToHighlight);
+      var chosenStateCharities = stateHighlightedCharities.get(Math.min(stateHighlightedCharities.distinctCharities.length, result.desiredDistribution.numStateCharities));
+
       var nationalHighlightedCharities = nationalCharities.getByCategory(personalizationOptions.categoryToHighlight);
+      var chosenNationalCharities = nationalHighlightedCharities.get(Math.min(nationalHighlightedCharities.distinctCharities.length, result.desiredDistribution.numNationalCharities));
 
-      var chosenAnimalCharities = stateHighlightedCharities.concat(nationalHighlightedCharities)
-        .shuffle().get(desiredNumHighlightedCharities);
-
-      result.add(chosenAnimalCharities);
+      result.add(chosenStateCharities.concat(chosenNationalCharities).slice(0, desiredNumHighlightedCharities));
     }
   }
 
