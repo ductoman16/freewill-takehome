@@ -27,8 +27,8 @@ export class CharityPicker {
     const chosenStateCharities = shuffledStateCharities.slice(0, stateCharitiesToPick);
     const chosenNationalCharities = shuffledNationalCharities.slice(0, nationalCharitiesToPick);
     
-    console.log(chosenStateCharities.length);
-    console.log(chosenNationalCharities.length);
+    console.log(`Choosing ${stateCharitiesToPick} state featured charities`);
+    console.log(`and ${nationalCharitiesToPick} nationally featured charities`);
 
     return _.shuffle(chosenStateCharities.concat(chosenNationalCharities));
   }

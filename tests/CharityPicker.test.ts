@@ -1,11 +1,11 @@
 import exp from "constants";
 import { CharityPicker } from "../src/CharityPicker"
 import { testCharities, getTestProfile, duplicateCharities } from "./sampledata";
-import { uniqWith,isEqual } from "lodash";
+import { uniqWith, isEqual } from "lodash";
 
 describe('CharityPicker', () => {
-    const totalCharities = 12;
-    const maxStateCharities = 5;
+    const totalCharities = 8;
+    const maxStateCharities = 3;
 
     let picker: CharityPicker;
 
@@ -20,6 +20,7 @@ describe('CharityPicker', () => {
             expect(results.length).toBe(totalCharities);
         });
 
+        // TODO: Flaky
         test("Returns randomly shuffled charities", () => {
 
             var results1 = picker.pickCharities(testCharities, getTestProfile());
@@ -66,26 +67,42 @@ describe('CharityPicker', () => {
             expect(results.length).toBe(withoutDuplicates.length);
         });
 
-        test("Returns only state charities for the user's state", ()=> {
+        test("Returns only state charities for the user's state", () => {
             const profile = getTestProfile();
             var results = picker.pickCharities(testCharities, profile);
-            
-            var stateCharities = results.filter(c=> c.featured.toLowerCase() === "state");
-            stateCharities.forEach(c=> expect(c.state.toLowerCase()).toBe(profile.state.toLowerCase()));
+
+            var stateCharities = results.filter(c => c.featured.toLowerCase() === "state");
+            stateCharities.forEach(c => expect(c.state.toLowerCase()).toBe(profile.state.toLowerCase()));
         });
 
-        test("Returns a random number of state charities", ()=> {
+        // TODO: Flaky
+        test("Returns a random number of state charities", () => {
+            picker = new CharityPicker(22, 21);
+
             var results1 = picker.pickCharities(testCharities, getTestProfile());
             var results2 = picker.pickCharities(testCharities, getTestProfile());
 
-            var stateCharities1 = results1.filter(c=> c.featured.toLowerCase() === "state");
-            var stateCharities2 = results2.filter(c=> c.featured.toLowerCase() === "state");
+            var stateCharities1 = results1.filter(c => c.featured.toLowerCase() === "state");
+            var stateCharities2 = results2.filter(c => c.featured.toLowerCase() === "state");
             /*
-             * Again, there's a small chance we'll get the same random number twice in a row,
+             * Again, there's a chance we'll get the same random number twice in a row,
              * but for the purpose of this assignment that's fine.
+             * 
+             * If this is important to fix, we can run pickCharities a large number of times,
+             * and assert that the results are approximately statistically random.
             */
-            
+
             expect(stateCharities2.length).not.toBe(stateCharities1.length);
+        });
+
+        test("Returns animal related charities if user has pets", () => {
+            const profile = getTestProfile();
+            profile.hasPets = true;
+
+            var results = picker.pickCharities(testCharities, profile);
+
+            expect(results.filter(c=> c.category.toLowerCase() === 'animal_related').length)
+                .toBeGreaterThan(0)
         });
     });
 })

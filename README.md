@@ -7,6 +7,12 @@ Use the following npm script to compile and run:
 npm run start
 ```
 
+And to run tests:
+
+``` shell
+npm run test
+```
+
 **Important Note:** I used older versions of packages like `typescript` and `jest` in this example, because the boilerplate specified Node 12, and I wanted to make sure it ran correctly. Were this a real application in production, I'd strongly recommend using more up-to-date versions due to security risks.
 
 ## Requirements
@@ -17,8 +23,8 @@ npm run start
     - [X] charities: Path to a CSV of charities
     - [X] profileInfo: Path to a CSV of the user's profile information (1 header row and 1 data row)
 - [X] output 12 random distinct charity objects, one per line, in a random order
-- [ ] The number of state-featured charities that are selected must be random, not a fixed number. 
-- [ ] State-featured charities chosen must match the user's state of residence. 
+- [X] The number of state-featured charities that are selected must be random, not a fixed number. 
+- [X] State-featured charities chosen must match the user's state of residence. 
 - [X] The number of state-featured charities chosen must not exceed 5. 
 - [X] The rest of the charities your program chooses must be nationally-featured charities.
 

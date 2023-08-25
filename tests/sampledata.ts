@@ -277,6 +277,55 @@ export const testCharities = [
     "state": "PENNSYLVANIA",
     "category": "OTHER",
     "featured": "NATIONAL"
+  },
+  {
+    "id": 40,
+    "name": "Shedd Aquarium Society",
+    "state": "MICHIGAN",
+    "category": "ANIMAL_RELATED",
+    "featured": "NATIONAL"
+  },
+  {
+    "id": 167,
+    "name": "Humane Society Of North Central Florida",
+    "state": "MICHIGAN",
+    "category": "ANIMAL_RELATED",
+    "featured": "NATIONAL"
+  },
+  {
+    "id": 213,
+    "name": "Aquarium Of The Pacific",
+    "state": "MICHIGAN",
+    "category": "ANIMAL_RELATED",
+    "featured": "NATIONAL"
+  },
+  {
+    "id": 294,
+    "name": "Zoo Miami Foundation Inc",
+    "state": "MICHIGAN",
+    "category": "ANIMAL_RELATED",
+    "featured": "NATIONAL"
+  },
+  {
+    "id": 437,
+    "name": "Austin Pets Alive",
+    "state": "MICHIGAN",
+    "category": "ANIMAL_RELATED",
+    "featured": "STATE"
+  },
+  {
+    "id": 450,
+    "name": "Animal Place",
+    "state": "MICHIGAN",
+    "category": "ANIMAL_RELATED",
+    "featured": "STATE"
+  },
+  {
+    "id": 469,
+    "name": "Zoological Society Of Buffalo Inc",
+    "state": "MICHIGAN",
+    "category": "ANIMAL_RELATED",
+    "featured": "STATE"
   }
 ]
 
