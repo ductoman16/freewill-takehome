@@ -21,15 +21,21 @@ export async function main() {
 
   const profile: Profile = await readProfile(profilePath);
   console.log(`Read profile ${JSON.stringify(profile)} from ${charitiesPath}`)
+  console.log();
 
   var personalizationOptions = new PersonalizationOptions(
     p => p.hasPets,
     "animal_related",
     4
   );
+
+  console.log("Starting randomized charity selection...");
+  console.log();
+
   const charityPicker = new CharityPicker(totalCharitiesToPick, maxStateCharitiesToPick, personalizationOptions);
   const charitiesToFeature = charityPicker.pickCharities(allCharities, profile);
 
+  console.log("total charities picked: " + charitiesToFeature.length)
   // Output result to standard out, one per line
   console.dir(charitiesToFeature);
 }
@@ -39,6 +45,7 @@ function welcome() {
   console.log("******************************");
   console.log("Hello FreeWill!");
   console.log("******************************");
+  console.log();
 }
 
 export function validateParameters(charitiesPath: string, profilePath: string): boolean {

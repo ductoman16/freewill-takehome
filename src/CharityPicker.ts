@@ -34,15 +34,18 @@ export class CharityPicker {
 
   private addPersonalizedCharities(
     profile: Profile,
-    distinctCharities: CharityCollection,
+    allDistinctCharities: CharityCollection,
     userStateCharities: CharityCollection,
     nationalCharities: CharityCollection,
     result: CharityPickerResult,
     personalizationOptions: PersonalizationOptions) {
 
     if (personalizationOptions.profileSelector(profile)) {
-      const allCharitiesInCategory = distinctCharities.getByCategory(personalizationOptions.categoryToHighlight);
+      const allCharitiesInCategory = allDistinctCharities.getByCategory(personalizationOptions.categoryToHighlight);
       const desiredNumHighlightedCharities = _.random(personalizationOptions.minNumberOfCharities, Math.min(allCharitiesInCategory.distinctCharities.length, this._totalCharitiesToPick));
+
+      console.log(`Including ${desiredNumHighlightedCharities} charities in the category: '${personalizationOptions.categoryToHighlight}'`);
+      console.log()
 
       var stateHighlightedCharities = userStateCharities.getByCategory(personalizationOptions.categoryToHighlight);
       var nationalHighlightedCharities = nationalCharities.getByCategory(personalizationOptions.categoryToHighlight);

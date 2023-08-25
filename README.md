@@ -1,13 +1,17 @@
 # Free Will Takehome Assignment - Charity Selector
 
 ## Running locally
-Use the following npm script to compile and run:
+Use the following npm script to compile and run.
 
 ``` shell
 npm run start
 ```
 
-And to run unit tests:
+The npm script already includes arguments for the charity and profile CSVs, but if you'd like to change the parameters you can do so in [./package.json](./package.json).
+
+### Unit Tests
+
+To run unit tests:
 
 ``` shell
 npm run test
