@@ -30,7 +30,7 @@ export class CharityCollection {
         return new CharityCollection(_.shuffle(this.distinctCharities));
     }
 
-    public get(numToGet: number): Charity[]{
+    public get(numToGet: number): Charity[] {
         return this.distinctCharities.slice(0, numToGet);
     }
 }

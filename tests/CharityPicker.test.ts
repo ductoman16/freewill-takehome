@@ -1,16 +1,16 @@
 import { CharityPicker } from "../src/CharityPicker"
+import { PersonalizationOptions } from "../src/PersonalizationOption";
 import { testCharities, getTestProfile, duplicateCharities } from "./sampledata";
 import { uniqWith, isEqual } from "lodash";
 
 describe('CharityPicker', () => {
     const totalCharities = 8;
     const maxStateCharities = 3;
-    const minAnimalCharities = 2;
 
     let picker: CharityPicker;
 
     beforeEach(() => {
-        picker = new CharityPicker(totalCharities, maxStateCharities, minAnimalCharities);
+        picker = new CharityPicker(totalCharities, maxStateCharities, null);
     });
 
     describe("pickCharities", () => {
@@ -56,7 +56,7 @@ describe('CharityPicker', () => {
         });
 
         test("Returns no duplicates", () => {
-            picker = new CharityPicker(4, 2, 0);
+            picker = new CharityPicker(4, 2, null);
 
             var results = picker.pickCharities(duplicateCharities, getTestProfile());
 
@@ -77,7 +77,7 @@ describe('CharityPicker', () => {
 
         // TODO: Flaky
         test("Returns a random number of state charities", () => {
-            picker = new CharityPicker(22, 21, 1);
+            picker = new CharityPicker(22, 21, null);
 
             var results1 = picker.pickCharities(testCharities, getTestProfile());
             var results2 = picker.pickCharities(testCharities, getTestProfile());
@@ -96,15 +96,19 @@ describe('CharityPicker', () => {
         });
 
         test("Returns animal related charities if user has pets", () => {
+            const minAnimalCharities = 2;
+            picker = new CharityPicker(totalCharities, maxStateCharities,
+                new PersonalizationOptions(p => p.hasPets, "animal_related", minAnimalCharities));
+
             const profile = getTestProfile();
             profile.hasPets = true;
 
             var results = picker.pickCharities(testCharities, profile);
 
-            expect(results.filter(c=> c.category.toLowerCase() === 'animal_related').length)
+            expect(results.filter(c => c.category.toLowerCase() === 'animal_related').length)
                 .toBeGreaterThanOrEqual(minAnimalCharities)
         });
 
-    
+
     });
 })

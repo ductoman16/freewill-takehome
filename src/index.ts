@@ -1,5 +1,6 @@
 import { readCharities, readProfile } from "./read-helpers";
 import { CharityPicker } from "./CharityPicker";
+import { PersonalizationOptions } from "./PersonalizationOption";
 
 const totalCharitiesToPick = 12;
 const maxStateCharitiesToPick = 5;
@@ -11,7 +12,7 @@ export async function main() {
   // Input arguments
   const [, , charitiesPath, profilePath] = process.argv;
 
-  if (!validateParameters(charitiesPath, profilePath)){
+  if (!validateParameters(charitiesPath, profilePath)) {
     return;
   }
 
@@ -21,7 +22,12 @@ export async function main() {
   const profile: Profile = await readProfile(profilePath);
   console.log(`Read profile ${JSON.stringify(profile)} from ${charitiesPath}`)
 
-  const charityPicker = new CharityPicker(totalCharitiesToPick, maxStateCharitiesToPick, minAnimalCharities);
+  var personalizationOptions = new PersonalizationOptions(
+    p => p.hasPets,
+    "animal_related",
+    4
+  );
+  const charityPicker = new CharityPicker(totalCharitiesToPick, maxStateCharitiesToPick, personalizationOptions);
   const charitiesToFeature = charityPicker.pickCharities(allCharities, profile);
 
   // Output result to standard out, one per line

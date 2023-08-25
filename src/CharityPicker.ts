@@ -1,17 +1,18 @@
 import { _ } from "lodash";
 import { CharityPickerResult } from "./CharityPickerResult";
 import { CharityCollection } from "./CharitiesCollection";
+import { PersonalizationOptions } from "./PersonalizationOption";
 
 export class CharityPicker {
 
   private _totalCharitiesToPick: number;
   private _maxStateCharitiesToPick: number;
-  private _minAnimalCharitiesToPick: number;
+  private _personalizationOptions: PersonalizationOptions;
 
-  constructor(totalCharitiesToPick: number, maxStateCharitiesToPick: number, minAnimalCharitiesToPick: number) {
+  constructor(totalCharitiesToPick: number, maxStateCharitiesToPick: number, personalizationOptions: PersonalizationOptions) {
     this._totalCharitiesToPick = totalCharitiesToPick;
     this._maxStateCharitiesToPick = maxStateCharitiesToPick;
-    this._minAnimalCharitiesToPick = minAnimalCharitiesToPick;
+    this._personalizationOptions = personalizationOptions;
   }
 
   public pickCharities(inputCharities: Charity[], profile: Profile): Charity[] {
@@ -22,22 +23,35 @@ export class CharityPicker {
 
     const result = new CharityPickerResult(this.chooseStateNationalDistribution());
 
-    if (profile.hasPets) {
-      const allAnimalCharities = distinctCharities.getByCategory('animal_related');
-      const desiredNumAnimalCharities = _.random(this._minAnimalCharitiesToPick, Math.min(allAnimalCharities.distinctCharities.length, this._totalCharitiesToPick));
-
-      var stateAnimalCharities = userStateCharities.getByCategory('animal_related');
-      var nationalAnimalCharities = nationalCharities.getByCategory('animal_related');
-
-      var chosenAnimalCharities = stateAnimalCharities.concat(nationalAnimalCharities)
-        .shuffle().get(desiredNumAnimalCharities);
-
-      result.add(chosenAnimalCharities);
+    if (this._personalizationOptions) {
+      this.addPersonalizedCharities(profile, distinctCharities, userStateCharities, nationalCharities, result, this._personalizationOptions);
     }
 
     result.fillRemaining(userStateCharities, nationalCharities);
 
     return _.shuffle(result.finalResultShuffled());
+  }
+
+  private addPersonalizedCharities(
+    profile: Profile,
+    distinctCharities: CharityCollection,
+    userStateCharities: CharityCollection,
+    nationalCharities: CharityCollection,
+    result: CharityPickerResult,
+    personalizationOptions: PersonalizationOptions) {
+
+    if (personalizationOptions.profileSelector(profile)) {
+      const allCharitiesInCategory = distinctCharities.getByCategory(personalizationOptions.categoryToHighlight);
+      const desiredNumHighlightedCharities = _.random(personalizationOptions.minNumberOfCharities, Math.min(allCharitiesInCategory.distinctCharities.length, this._totalCharitiesToPick));
+
+      var stateHighlightedCharities = userStateCharities.getByCategory(personalizationOptions.categoryToHighlight);
+      var nationalHighlightedCharities = nationalCharities.getByCategory(personalizationOptions.categoryToHighlight);
+
+      var chosenAnimalCharities = stateHighlightedCharities.concat(nationalHighlightedCharities)
+        .shuffle().get(desiredNumHighlightedCharities);
+
+      result.add(chosenAnimalCharities);
+    }
   }
 
   private chooseStateNationalDistribution() {

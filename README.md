@@ -7,13 +7,19 @@ Use the following npm script to compile and run:
 npm run start
 ```
 
-And to run tests:
+And to run unit tests:
 
 ``` shell
 npm run test
 ```
+**Important Note #1:** Some of these tests are "flaky" due to testing randomized functionality. As mentioned in the comments in the test files, this could be fixed by
+performing statistical analysis to validate that results appear random, but I didn't think that was appropriate for this exercise.
 
-**Important Note:** I used older versions of packages like `typescript` and `jest` in this example, because the boilerplate specified Node 12, and I wanted to make sure it ran correctly. Were this a real application in production, I'd strongly recommend using more up-to-date versions due to security risks.
+---
+
+**Important Note #2:** I used older versions of packages like `typescript` and `jest` in this example, because the boilerplate specified Node 12, and I wanted to make sure it ran correctly. Were this a real application in production, I'd strongly recommend using more up-to-date versions due to security risks.
+
+---
 
 ## Requirements
 
@@ -31,5 +37,5 @@ npm run test
 ### Part 2
 
 - [X] If the user in profileInfo has pets, ensure that at least 4 are ANIMAL_RELATED organizations
-- [ ] future-proofing
+- [X] future-proofing
 - [X] Still works if user doesn't have pets

@@ -13,7 +13,7 @@ export class CharityPickerResult {
     charities.forEach(c => {
       if (c.featured?.toLowerCase() === "state") {
         this.stateCharities.push(c);
-      } else if (c.featured?.toLowerCase() === "national"){
+      } else if (c.featured?.toLowerCase() === "national") {
         this.nationalCharities.push(c);
       }
     });
