@@ -26,7 +26,7 @@ export async function main() {
   var personalizationOptions = new PersonalizationOptions(
     p => p.hasPets,
     "animal_related",
-    4
+    minAnimalCharities
   );
 
   console.log("Starting randomized charity selection...");

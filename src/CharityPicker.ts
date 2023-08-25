@@ -53,7 +53,12 @@ export class CharityPicker {
       var nationalHighlightedCharities = nationalCharities.getByCategory(personalizationOptions.categoryToHighlight);
       var chosenNationalCharities = nationalHighlightedCharities.get(Math.min(nationalHighlightedCharities.distinctCharities.length, result.desiredDistribution.numNationalCharities));
 
-      result.add(chosenStateCharities.concat(chosenNationalCharities).slice(0, desiredNumHighlightedCharities));
+      const newLocal = chosenStateCharities.concat(chosenNationalCharities);
+      result.add(newLocal.slice(0, desiredNumHighlightedCharities));
+      
+      // Remove chosen personalized charities from the pool
+      userStateCharities.remove(chosenStateCharities);
+      nationalCharities.remove(chosenNationalCharities);
     }
   }
 

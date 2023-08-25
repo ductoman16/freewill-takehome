@@ -21,17 +21,9 @@ export class CharityPickerResult {
 
   public fillRemaining(stateCharities: CharityCollection, nationalCharities: CharityCollection) {
     const stateCharitiesToAdd = stateCharities.shuffle().get(this.desiredDistribution.numStateCharities - this.stateCharities.length);
-    console.log("this.desiredDistribution.numStateCharities " + this.desiredDistribution.numStateCharities)
-    console.log("this.stateCharities.length " + this.stateCharities.length)
-    console.log("this.desiredDistribution.numStateCharities - this.stateCharities.length " + (this.desiredDistribution.numStateCharities - this.stateCharities.length))
-    console.log("filling remaining with " + stateCharitiesToAdd.length + " state charities")
     this.add(stateCharitiesToAdd);
 
     const nationalCharitiesToAdd = nationalCharities.shuffle().get(this.desiredDistribution.numNationalCharities - this.nationalCharities.length);
-    console.log("this.desiredDistribution.numNationalCharities " + this.desiredDistribution.numNationalCharities)
-    console.log("this.nationalCharities.length " + this.nationalCharities.length)
-    console.log("this.desiredDistribution.numNationalCharities - this.nationalCharities.length " + (this.desiredDistribution.numNationalCharities - this.nationalCharities.length))
-    console.log("filling remaining with " + nationalCharitiesToAdd.length + " national charities")
     this.add(nationalCharitiesToAdd);
 
     console.log();

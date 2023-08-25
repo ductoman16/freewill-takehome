@@ -33,4 +33,10 @@ export class CharityCollection {
     public get(numToGet: number): Charity[] {
         return this.distinctCharities.slice(0, numToGet);
     }
+
+    remove(chosenStateCharities: Charity[]) {
+        chosenStateCharities.forEach(c => {
+            _.remove(this.distinctCharities, d => _.isEqual(c, d));
+        });
+    }
 }

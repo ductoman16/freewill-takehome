@@ -108,18 +108,5 @@ describe('CharityPicker', () => {
             expect(results.filter(c => c.category.toLowerCase() === 'animal_related').length)
                 .toBeGreaterThanOrEqual(minAnimalCharities)
         });
-
-        // test("Still returns correct total number of charities when personlized results are included", () => {
-        //     const minAnimalCharities = 2;
-        //     picker = new CharityPicker(totalCharities, maxStateCharities,
-        //         new PersonalizationOptions(p => p.hasPets, "animal_related", minAnimalCharities));
-
-        //     const profile = getTestProfile();
-        //     profile.hasPets = true;
-
-        //     var results = picker.pickCharities(testCharities, profile);
-
-        //     expect(results.length).toBe(totalCharities);
-        // });
     });
 })
