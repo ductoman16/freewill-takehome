@@ -18,10 +18,10 @@
     "node": ">=12"
   },
   "devDependencies": {
-    "@types/jest": "^29.5.4",
+    "@types/jest": "^28",
     "@types/node": "^20.5.4",
     "jest": "^28",
-    "ts-jest": "^29.1.1",
+    "ts-jest": "^28",
     "typescript": "^4.7.4"
   }
 }

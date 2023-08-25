@@ -1,9 +1,10 @@
 # Free Will Takehome Assignment - Charity Selector
 
 ## Running locally
-Use the following npm script to compile and run.
+Use the following commands to compile and run.
 
 ``` shell
+npm install
 npm run start
 ```
 
