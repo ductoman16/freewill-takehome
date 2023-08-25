@@ -5,7 +5,7 @@
   "main": "dist/index.js",
   "scripts": {
     "build": "tsc",
-    "start": "tsc && node dist/src/index.js",
+    "start": "tsc && node dist/src/index.js 'data/charities.csv' 'data/example-profile.csv'",
     "test": "jest",
     "test-watch": "jest --watch"
   },

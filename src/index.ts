@@ -1,4 +1,8 @@
 import { readCharities, readProfile } from "./read-helpers";
+import { CharityPicker } from "./CharityPicker";
+
+const totalCharitiesToPick = 12;
+const maxStateCharitiesToPick = 5;
 
 export async function main() {
   welcome();
@@ -16,7 +20,8 @@ export async function main() {
   const profile: Profile = await readProfile(profilePath);
   console.log(`Read profile ${JSON.stringify(profile)} from ${charitiesPath}`)
 
-  const charitiesToFeature = pickCharities(allCharities, profile);
+  const charityPicker = new CharityPicker(totalCharitiesToPick, maxStateCharitiesToPick);
+  const charitiesToFeature = charityPicker.pickCharities(allCharities, profile);
 
   // Output result to standard out, one per line
   console.dir(charitiesToFeature);
