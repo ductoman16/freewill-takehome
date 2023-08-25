@@ -1,4 +1,3 @@
-import exp from "constants";
 import { CharityPicker } from "../src/CharityPicker"
 import { testCharities, getTestProfile, duplicateCharities } from "./sampledata";
 import { uniqWith, isEqual } from "lodash";
@@ -6,11 +5,12 @@ import { uniqWith, isEqual } from "lodash";
 describe('CharityPicker', () => {
     const totalCharities = 8;
     const maxStateCharities = 3;
+    const minAnimalCharities = 2;
 
     let picker: CharityPicker;
 
     beforeEach(() => {
-        picker = new CharityPicker(totalCharities, maxStateCharities);
+        picker = new CharityPicker(totalCharities, maxStateCharities, minAnimalCharities);
     });
 
     describe("pickCharities", () => {
@@ -56,7 +56,7 @@ describe('CharityPicker', () => {
         });
 
         test("Returns no duplicates", () => {
-            picker = new CharityPicker(4, 2);
+            picker = new CharityPicker(4, 2, 0);
 
             var results = picker.pickCharities(duplicateCharities, getTestProfile());
 
@@ -77,7 +77,7 @@ describe('CharityPicker', () => {
 
         // TODO: Flaky
         test("Returns a random number of state charities", () => {
-            picker = new CharityPicker(22, 21);
+            picker = new CharityPicker(22, 21, 1);
 
             var results1 = picker.pickCharities(testCharities, getTestProfile());
             var results2 = picker.pickCharities(testCharities, getTestProfile());
@@ -102,7 +102,9 @@ describe('CharityPicker', () => {
             var results = picker.pickCharities(testCharities, profile);
 
             expect(results.filter(c=> c.category.toLowerCase() === 'animal_related').length)
-                .toBeGreaterThan(0)
+                .toBeGreaterThanOrEqual(minAnimalCharities)
         });
+
+    
     });
 })

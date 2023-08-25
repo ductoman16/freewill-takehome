@@ -30,6 +30,6 @@ npm run test
 
 ### Part 2
 
-- [ ] If the user in profileInfo has pets, ensure that at least 4 are ANIMAL_RELATED organizations
+- [X] If the user in profileInfo has pets, ensure that at least 4 are ANIMAL_RELATED organizations
 - [ ] future-proofing
-- [ ] Still works if user doesn't have pets
+- [X] Still works if user doesn't have pets

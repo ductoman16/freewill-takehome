@@ -3,6 +3,7 @@ import { CharityPicker } from "./CharityPicker";
 
 const totalCharitiesToPick = 12;
 const maxStateCharitiesToPick = 5;
+const minAnimalCharities = 4;
 
 export async function main() {
   welcome();
@@ -20,7 +21,7 @@ export async function main() {
   const profile: Profile = await readProfile(profilePath);
   console.log(`Read profile ${JSON.stringify(profile)} from ${charitiesPath}`)
 
-  const charityPicker = new CharityPicker(totalCharitiesToPick, maxStateCharitiesToPick);
+  const charityPicker = new CharityPicker(totalCharitiesToPick, maxStateCharitiesToPick, minAnimalCharities);
   const charitiesToFeature = charityPicker.pickCharities(allCharities, profile);
 
   // Output result to standard out, one per line

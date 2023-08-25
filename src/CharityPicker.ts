@@ -1,35 +1,51 @@
 import { _ } from "lodash";
+import { CharityPickerResult } from "./CharityPickerResult";
+import { CharityCollection } from "./CharitiesCollection";
 
 export class CharityPicker {
 
   private _totalCharitiesToPick: number;
   private _maxStateCharitiesToPick: number;
+  private _minAnimalCharitiesToPick: number;
 
-  constructor(totalCharitiesToPick: number, maxStateCharitiesToPick: number) {
+  constructor(totalCharitiesToPick: number, maxStateCharitiesToPick: number, minAnimalCharitiesToPick: number) {
     this._totalCharitiesToPick = totalCharitiesToPick;
     this._maxStateCharitiesToPick = maxStateCharitiesToPick;
+    this._minAnimalCharitiesToPick = minAnimalCharitiesToPick;
   }
 
-  public pickCharities(allCharities: Charity[], profile: Profile): Charity[] {
-    const distinctCharities = _.uniqWith(allCharities, (a, b) => _.isEqual(a, b));
+  public pickCharities(inputCharities: Charity[], profile: Profile): Charity[] {
+    const distinctCharities = new CharityCollection(inputCharities);
 
-    let nationalCharities = distinctCharities.filter(c => c.featured.toLowerCase() === "national");
-    let userStateCharities = distinctCharities.filter(c => 
-      c.featured.toLowerCase() === "state" 
-      && c.state.toLowerCase() === profile.state.toLowerCase());
+    let nationalCharities = distinctCharities.getNationallyFeaturedCharities();
+    let userStateCharities = distinctCharities.getStateFeaturedCharitiesForUser(profile);
 
-    let shuffledNationalCharities = _.shuffle(nationalCharities);
-    let shuffledStateCharities = _.shuffle(userStateCharities);
+    const result = new CharityPickerResult(this.chooseStateNationalDistribution());
 
-    const stateCharitiesToPick = _.random(1, this._maxStateCharitiesToPick);
-    const nationalCharitiesToPick = this._totalCharitiesToPick - stateCharitiesToPick;
+    if (profile.hasPets) {
+      const allAnimalCharities = distinctCharities.getByCategory('animal_related');
+      const desiredNumAnimalCharities = _.random(this._minAnimalCharitiesToPick, Math.min(allAnimalCharities.distinctCharities.length, this._totalCharitiesToPick));
 
-    const chosenStateCharities = shuffledStateCharities.slice(0, stateCharitiesToPick);
-    const chosenNationalCharities = shuffledNationalCharities.slice(0, nationalCharitiesToPick);
-    
-    console.log(`Choosing ${stateCharitiesToPick} state featured charities`);
-    console.log(`and ${nationalCharitiesToPick} nationally featured charities`);
+      var stateAnimalCharities = userStateCharities.getByCategory('animal_related');
+      var nationalAnimalCharities = nationalCharities.getByCategory('animal_related');
 
-    return _.shuffle(chosenStateCharities.concat(chosenNationalCharities));
+      var chosenAnimalCharities = stateAnimalCharities.concat(nationalAnimalCharities)
+        .shuffle().get(desiredNumAnimalCharities);
+
+      result.add(chosenAnimalCharities);
+    }
+
+    result.fillRemaining(userStateCharities, nationalCharities);
+
+    return _.shuffle(result.finalResultShuffled());
+  }
+
+  private chooseStateNationalDistribution() {
+    const numStateCharities = _.random(1, this._maxStateCharitiesToPick);
+    const numNationalCharities = this._totalCharitiesToPick - numStateCharities;
+
+    console.log(`Choosing ${numStateCharities} state featured charities`);
+    console.log(`and ${numNationalCharities} nationally featured charities`);
+    return { numStateCharities, numNationalCharities };
   }
 }
